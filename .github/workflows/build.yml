@@ -22,5 +22,7 @@ jobs:
           msbuild builds/vc/HDiffPatch.sln -t:rebuild -verbosity:diag -property:Configuration=Release -property:Platform=x64
       - uses: actions/upload-artifact@v4
         with:
-          name: windows-vc-build
-          path: ${{ github.workspace }}
+          name: windows-x64-vc-build
+          path: |
+            ${{ github.workspace }}/builds/vc/Release/x64/hdiffz.exe
+            ${{ github.workspace }}/builds/vc/Release/x64/hpatchz.exe
