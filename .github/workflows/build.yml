@@ -1,0 +1,28 @@
+name: Build
+on:
+  workflow_dispatch:
+jobs:
+  vc-build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: microsoft/setup-msbuild@v2
+        with:
+          msbuild-architecture: x64
+      - name: initAndClone
+        run: |
+          git clone --depth=1 https://github.com/sisong/libmd5.git ../libmd5
+          git clone --depth=1 https://github.com/sisong/lzma.git ../lzma
+          git clone --depth=1 https://github.com/sisong/zstd.git ../zstd
+          git clone --depth=1 https://github.com/sisong/bzip2.git ../bzip2
+          git clone --depth=1 https://github.com/sisong/zlib.git ../zlib
+          git clone --depth=1 https://github.com/sisong/libdeflate.git ../libdeflate
+      - name: buildByVC
+        run: |
+          msbuild builds/vc/HDiffPatch.sln -t:rebuild -verbosity:diag -property:Configuration=Release -property:Platform=x64
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-x64-vc-build
+          path: |
+            ${{ github.workspace }}/builds/vc/Release/x64/hdiffz.exe
+            ${{ github.workspace }}/builds/vc/Release/x64/hpatchz.exe
