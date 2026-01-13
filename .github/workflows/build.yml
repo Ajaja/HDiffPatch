@@ -12,6 +12,7 @@ jobs:
       - name: initAndClone
         run: |
           git clone --depth=1 https://github.com/sisong/libmd5.git ../libmd5
+          git clone --depth=1 https://github.com/sisong/xxHash.git ../xxHash
           git clone --depth=1 https://github.com/sisong/lzma.git ../lzma
           git clone --depth=1 https://github.com/sisong/zstd.git ../zstd
           git clone --depth=1 https://github.com/sisong/bzip2.git ../bzip2
